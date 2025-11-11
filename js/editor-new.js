@@ -60,7 +60,13 @@ function autoSave() {
             timestamp: Date.now(),
             data: JSON.parse(JSON.stringify(editorData))
         };
+        // 保存到备份
         localStorage.setItem('nav_data_backup', JSON.stringify(backup));
+        
+        // 同时保存到主数据，供主页实时读取
+        localStorage.setItem('nav_data_live', JSON.stringify(editorData));
+        
+        console.log('✅ 数据已自动保存并同步');
     } catch (error) {
         console.error('自动保存失败:', error);
     }

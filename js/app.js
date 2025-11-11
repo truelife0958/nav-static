@@ -85,12 +85,15 @@ function getIconFallback(domain) {
 function initApp() {
   console.log('🚀 导航网站初始化...');
   
-  // 应用网站设置
-  applySiteSettings();
+  // 优先从 localStorage 加载实时数据
+  const liveData = loadLiveData();
   
-  AppState.allMenus = NAV_DATA.menus;
-  AppState.allCards = NAV_DATA.cards;
-  AppState.friendLinks = NAV_DATA.friendLinks || [];
+  // 应用网站设置
+  applySiteSettings(liveData);
+  
+  AppState.allMenus = liveData.menus;
+  AppState.allCards = liveData.cards;
+  AppState.friendLinks = liveData.friendLinks || [];
   AppState.selectedEngine = AppState.searchEngines[0];
   
   renderSearchEngines();
@@ -107,9 +110,27 @@ function initApp() {
   console.log('✅ 导航网站初始化完成');
 }
 
+// ========== 加载实时数据 ==========
+function loadLiveData() {
+  try {
+    const liveDataStr = localStorage.getItem('nav_data_live');
+    if (liveDataStr) {
+      const liveData = JSON.parse(liveDataStr);
+      console.log('📡 已加载编辑器实时数据');
+      return liveData;
+    }
+  } catch (error) {
+    console.warn('加载实时数据失败，使用默认数据:', error);
+  }
+  
+  // 如果没有实时数据，使用 data.js 中的默认数据
+  console.log('📄 使用默认配置数据');
+  return NAV_DATA;
+}
+
 // ========== 应用网站设置 ==========
-function applySiteSettings() {
-  const settings = NAV_DATA.settings || {};
+function applySiteSettings(data) {
+  const settings = (data && data.settings) || NAV_DATA.settings || {};
   
   // 设置标题
   if (settings.siteTitle) {
