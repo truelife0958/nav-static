@@ -1,0 +1,419 @@
+/**
+ * 暗色模式样式
+ */
+
+/* 基础暗色模式变量 */
+body.dark-mode {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #e5e7eb;
+    --text-tertiary: #d1d5db;
+    --border-color: #374151;
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+/* 亮色模式变量 */
+body.light-mode {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-tertiary: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* 暗色模式基础样式 */
+body.dark-mode {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-tertiary);
+    transform: scale(1.05);
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+}
+
+.theme-icon-light {
+    display: block;
+    color: #fbbf24;
+}
+
+.theme-icon-dark {
+    display: none;
+    color: #60a5fa;
+}
+
+body.dark-mode .theme-icon-light {
+    display: none;
+}
+
+body.dark-mode .theme-icon-dark {
+    display: block;
+}
+
+/* 主题选择器 */
+.theme-selector {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.theme-selector-header h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.theme-selector-options {
+    display: grid;
+    gap: 12px;
+}
+
+.theme-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.theme-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-option-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.theme-option:hover .theme-option-content {
+    border-color: #3b82f6;
+    background: var(--bg-tertiary);
+}
+
+.theme-option input[type="radio"]:checked + .theme-option-content {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.theme-option-content svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-secondary);
+}
+
+.theme-option input[type="radio"]:checked + .theme-option-content svg {
+    color: #3b82f6;
+}
+
+.theme-option-content span {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* 暗色模式下的各种组件样式 */
+body.dark-mode .container {
+    background: var(--bg-secondary);
+}
+
+body.dark-mode .card {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .card:hover {
+    background: var(--bg-tertiary);
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+    background: var(--bg-secondary);
+    border-color: #3b82f6;
+}
+
+body.dark-mode button {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode button:hover {
+    background: #4b5563;
+}
+
+body.dark-mode .btn-primary {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+body.dark-mode .btn-primary:hover {
+    background: #2563eb;
+}
+
+body.dark-mode .header {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--border-color);
+}
+
+body.dark-mode .sidebar {
+    background: var(--bg-secondary);
+    border-right-color: var(--border-color);
+}
+
+body.dark-mode .footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--border-color);
+}
+
+/* 导航链接 */
+body.dark-mode .nav-link {
+    color: var(--text-secondary);
+}
+
+body.dark-mode .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+body.dark-mode .nav-link.active {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* 模态框 */
+body.dark-mode .modal-content {
+    background: var(--bg-secondary);
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: var(--border-color);
+}
+
+/* 表格 */
+body.dark-mode table {
+    background: var(--bg-secondary);
+}
+
+body.dark-mode th {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode td {
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+body.dark-mode tr:hover {
+    background: var(--bg-tertiary);
+}
+
+/* 标签 */
+body.dark-mode .tag {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+/* 徽章 */
+body.dark-mode .badge {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+body.dark-mode .badge-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+body.dark-mode .badge-success {
+    background: #10b981;
+    color: white;
+}
+
+body.dark-mode .badge-warning {
+    background: #f59e0b;
+    color: white;
+}
+
+body.dark-mode .badge-error {
+    background: #ef4444;
+    color: white;
+}
+
+/* 代码块 */
+body.dark-mode pre,
+body.dark-mode code {
+    background: var(--bg-tertiary);
+    color: #e5e7eb;
+    border-color: var(--border-color);
+}
+
+/* 滚动条 */
+body.dark-mode ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 6px;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #4b5563;
+}
+
+/* 工具提示 */
+body.dark-mode .tooltip {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* 下拉菜单 */
+body.dark-mode .dropdown-menu {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+body.dark-mode .dropdown-item {
+    color: var(--text-primary);
+}
+
+body.dark-mode .dropdown-item:hover {
+    background: var(--bg-tertiary);
+}
+
+/* 面包屑 */
+body.dark-mode .breadcrumb {
+    background: var(--bg-secondary);
+}
+
+body.dark-mode .breadcrumb-item {
+    color: var(--text-secondary);
+}
+
+body.dark-mode .breadcrumb-item.active {
+    color: var(--text-primary);
+}
+
+/* 进度条 */
+body.dark-mode .progress {
+    background: var(--bg-tertiary);
+}
+
+body.dark-mode .progress-bar {
+    background: #3b82f6;
+}
+
+/* 警告框 */
+body.dark-mode .alert {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body.dark-mode .alert-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+    color: #60a5fa;
+}
+
+body.dark-mode .alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: #10b981;
+    color: #34d399;
+}
+
+body.dark-mode .alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b;
+    color: #fbbf24;
+}
+
+body.dark-mode .alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+    color: #f87171;
+}
+
+/* 平滑过渡 */
+body,
+.theme-toggle,
+.theme-option-content,
+input,
+textarea,
+select,
+button,
+.card,
+.modal-content {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .theme-selector {
+        padding: 16px;
+    }
+    
+    .theme-option-content {
+        padding: 10px 12px;
+    }
+}

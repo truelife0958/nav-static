@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="siteTitle">我的导航网站</title>
+    <meta name="description" content="快速访问您喜爱的网站" id="siteDescription">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 星空背景画布 -->
+    <canvas id="starfield"></canvas>
+    
+    <!-- 背景图片层 -->
+    <div class="background-image"></div>
+    
+    <!-- 遮罩层 -->
+    <div class="background-overlay"></div>
+    
+    <!-- 主容器 -->
+    <div class="home-container">
+        <!-- 固定菜单栏 -->
+        <div class="menu-bar-fixed">
+            <nav class="menu-bar" id="menuBar">
+                <!-- 菜单将通过JavaScript动态生成 -->
+            </nav>
+        </div>
+        
+        <!-- 搜索区域 -->
+        <div class="search-section">
+            <div class="search-box-wrapper">
+                <!-- 搜索引擎选择 -->
+                <div class="search-engine-select" id="searchEngineSelect">
+                    <!-- 搜索引擎按钮将通过JavaScript动态生成 -->
+                </div>
+                <!-- 搜索框 -->
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        placeholder="Google 搜索..." 
+                        class="search-input"
+                    />
+                    <button id="clearBtn" class="clear-btn" style="display: none;" title="清空">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <button id="searchBtn" class="search-btn" title="搜索">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 子菜单区域（独立显示） -->
+        <div class="submenu-section" id="submenuSection">
+            <div class="submenu-scroll" id="submenuScroll">
+                <!-- 子菜单将通过JavaScript动态生成 -->
+            </div>
+        </div>
+        
+        <!-- 分割线 -->
+        <div class="divider"></div>
+        
+        <!-- 卡片区域 -->
+        <div class="cards-section">
+            <div class="cards-wrapper">
+                <button class="cards-nav-btn cards-prev" id="cardsPrev">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <div class="container card-grid" id="cardGrid">
+                    <!-- 卡片将通过JavaScript动态生成 -->
+                </div>
+                <button class="cards-nav-btn cards-next" id="cardsNext">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <button id="friendLinkBtn" class="friend-link-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    友情链接
+                </button>
+                <a href="editor.html" class="friend-link-btn" style="text-decoration: none;" title="打开数据编辑器">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    数据编辑器
+                </a>
+                <p class="copyright" id="siteFooter">
+                    © 2024 我的导航
+                </p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- 友情链接弹窗 -->
+    <div id="friendLinksModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>友情链接</h3>
+                <button id="closeModalBtn" class="close-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="friend-links-grid" id="friendLinksGrid">
+                    <!-- 友情链接将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入脚本 -->
+    <script src="js/stars.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

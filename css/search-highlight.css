@@ -1,0 +1,281 @@
+/**
+ * 搜索高亮样式
+ */
+
+/* 高亮标记 */
+.search-highlight {
+    background-color: #fef08a;
+    color: #854d0e;
+    padding: 2px 0;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+/* 当前激活的高亮 */
+.search-highlight-active {
+    background-color: #fbbf24;
+    color: #78350f;
+    box-shadow: 0 0 0 2px #f59e0b;
+    font-weight: 500;
+}
+
+/* 搜索导航控件 */
+.search-navigation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+}
+
+.search-nav-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #6b7280;
+    min-width: 60px;
+    justify-content: center;
+}
+
+.search-nav-current {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.search-nav-total {
+    color: #6b7280;
+}
+
+.search-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.search-nav-btn:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    color: #1f2937;
+}
+
+.search-nav-btn:active {
+    background: #e5e7eb;
+}
+
+.search-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.search-nav-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 搜索框增强样式 */
+.search-container {
+    position: relative;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-clear-btn {
+    position: absolute;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: #6b7280;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.search-input:not(:placeholder-shown) ~ .search-clear-btn {
+    display: flex;
+}
+
+.search-clear-btn:hover {
+    background: #4b5563;
+}
+
+/* 搜索结果高亮容器 */
+.search-results-container {
+    position: relative;
+}
+
+.search-results-container .search-highlight {
+    animation: highlightFade 0.3s ease;
+}
+
+@keyframes highlightFade {
+    0% {
+        background-color: #fef3c7;
+    }
+    100% {
+        background-color: #fef08a;
+    }
+}
+
+/* 搜索统计信息 */
+.search-stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: #f3f4f6;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #6b7280;
+    margin-left: 8px;
+}
+
+.search-stats-number {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+/* 暗色模式支持 */
+body.dark-mode .search-highlight {
+    background-color: #fbbf24;
+    color: #1f2937;
+}
+
+body.dark-mode .search-highlight-active {
+    background-color: #f59e0b;
+    color: #111827;
+    box-shadow: 0 0 0 2px #d97706;
+}
+
+body.dark-mode .search-navigation {
+    background: #1f2937;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .search-nav-info {
+    color: #9ca3af;
+}
+
+body.dark-mode .search-nav-current {
+    color: #f9fafb;
+}
+
+body.dark-mode .search-nav-btn {
+    border-color: #374151;
+    color: #9ca3af;
+}
+
+body.dark-mode .search-nav-btn:hover {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+body.dark-mode .search-nav-btn:active {
+    background: #4b5563;
+}
+
+body.dark-mode .search-clear-btn {
+    background: #9ca3af;
+}
+
+body.dark-mode .search-clear-btn:hover {
+    background: #6b7280;
+}
+
+body.dark-mode .search-stats {
+    background: #374151;
+    color: #9ca3af;
+}
+
+body.dark-mode .search-stats-number {
+    color: #f9fafb;
+}
+
+/* 搜索输入框动画 */
+.search-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 无结果提示 */
+.search-no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.search-no-results-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.search-no-results-text {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.search-no-results-hint {
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+body.dark-mode .search-no-results {
+    color: #9ca3af;
+}
+
+body.dark-mode .search-no-results-hint {
+    color: #6b7280;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .search-navigation {
+        font-size: 12px;
+        gap: 6px;
+        padding: 3px 6px;
+    }
+
+    .search-nav-btn {
+        width: 24px;
+        height: 24px;
+    }
+
+    .search-nav-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .search-stats {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}

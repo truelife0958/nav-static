@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航数据编辑器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #667eea;
+        }
+
+        .content {
+            padding: 30px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .add-section {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .add-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .form-field {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #40c057;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #fa5252;
+        }
+
+        .btn-secondary {
+            background: #868e96;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #495057;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .category-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .category-body {
+            padding-left: 20px;
+        }
+
+        .category-section.collapsed .category-body {
+            display: none;
+        }
+
+        .collapse-indicator {
+            transition: transform 0.3s;
+        }
+
+        .category-section.collapsed .collapse-indicator {
+            transform: rotate(-90deg);
+        }
+
+        .submenu-section {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .submenu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .submenu-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .submenu-meta {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .card-item.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .card-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .card-url {
+            font-size: 12px;
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .card-url:hover {
+            text-decoration: underline;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #d0ebff;
+            color: #1864ab;
+            border: 1px solid #74c0fc;
+        }
+
+        .alert-success {
+            background: #d3f9d8;
+            color: #2b8a3e;
+            border: 1px solid #8ce99a;
+        }
+
+        .friend-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .friend-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .friend-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .friend-info {
+            flex: 1;
+        }
+
+        .friend-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .friend-url {
+            font-size: 12px;
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .settings-form {
+            max-width: 800px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #868e96;
+            margin-top: 5px;
+        }
+
+        .export-section {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .code-preview {
+            background: #2d3748;
+            color: #a0aec0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow: auto;
+            margin-top: 20px;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            text-decoration: none;
+        }
+
+        .header-content {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <a href="index.html" class="btn btn-secondary back-btn" title="返回主页">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+                    </svg>
+                    返回主页
+                </a>
+                <div>
+                    <h1>🎨 导航数据编辑器</h1>
+                    <p>可视化管理您的导航网站数据</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="settings">网站设置</button>
+            <button class="tab" data-tab="content">内容管理</button>
+            <button class="tab" data-tab="friends">友情链接</button>
+            <button class="tab" data-tab="export">导出数据</button>
+        </div>
+
+        <div class="content">
+            <!-- 网站设置 -->
+            <div class="tab-content active" id="settings">
+                <div class="alert alert-info">
+                    💡 这里可以修改网站的基础信息、主题颜色等配置
+                </div>
+                <form class="settings-form" onsubmit="saveSettings(event)">
+                    <div class="form-group">
+                        <label class="form-label">网站标题 *</label>
+                        <input type="text" class="form-input" id="siteTitle" required>
+                        <div class="form-hint">显示在浏览器标签页和页面顶部</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">网站描述</label>
+                        <textarea class="form-textarea" id="siteDescription"></textarea>
+                        <div class="form-hint">用于SEO优化</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">页脚文字</label>
+                        <input type="text" class="form-input" id="siteFooter">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">项目链接</label>
+                        <input type="url" class="form-input" id="siteProjectUrl">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">项目作者</label>
+                        <input type="text" class="form-input" id="siteAuthor">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">主题色</label>
+                        <input type="color" class="form-input" id="sitePrimaryColor" value="#667eea">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">辅助色</label>
+                        <input type="color" class="form-input" id="siteSecondaryColor" value="#764ba2">
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button type="submit" class="btn btn-success">💾 保存设置</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 内容管理 -->
+            <div class="tab-content" id="content">
+                <div class="alert alert-info">
+                    💡 在下方输入框中快速添加菜单和卡片，所有内容按分类展示
+                </div>
+
+                <!-- 添加菜单 -->
+                <div class="add-section">
+                    <h3 style="margin-bottom: 15px;">➕ 添加新菜单</h3>
+                    <form class="add-form" onsubmit="quickAddMenu(event)">
+                        <div class="form-field">
+                            <label>菜单名称 *</label>
+                            <input type="text" id="quickMenuName" placeholder="例如：开发工具" required>
+                        </div>
+                        <div class="form-field" style="flex: 0 0 100px;">
+                            <label>图标</label>
+                            <input type="text" id="quickMenuIcon" placeholder="🔧">
+                        </div>
+                        <div class="form-field">
+                            <label>子菜单（逗号分隔）</label>
+                            <input type="text" id="quickMenuSubs" placeholder="前端,后端,工具">
+                        </div>
+                        <button type="submit" class="btn btn-primary">添加菜单</button>
+                    </form>
+                </div>
+
+                <!-- 添加卡片 -->
+                <div class="add-section">
+                    <h3 style="margin-bottom: 15px;">➕ 添加新卡片</h3>
+                    <form class="add-form" onsubmit="quickAddCard(event)">
+                        <div class="form-field">
+                            <label>所属子菜单 *</label>
+                            <select id="quickCardMenu" required>
+                                <option value="">选择子菜单</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>网站名称 *</label>
+                            <input type="text" id="quickCardTitle" placeholder="例如：GitHub" required>
+                        </div>
+                        <div class="form-field">
+                            <label>网站链接 *</label>
+                            <input type="url" id="quickCardUrl" placeholder="https://github.com" required>
+                        </div>
+                        <div class="form-field" style="flex: 1 1 100%;">
+                            <label>描述（可选）</label>
+                            <input type="text" id="quickCardDesc" placeholder="网站描述">
+                        </div>
+                        <button type="submit" class="btn btn-primary">添加卡片</button>
+                    </form>
+                </div>
+
+                <!-- 分类展示区 -->
+                <div id="categoriesContainer"></div>
+                
+                <!-- 批量操作工具栏 -->
+                <div id="batch-toolbar" style="display: none; position: fixed; bottom: 30px; right: 30px; background: white; padding: 15px 20px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-weight: 600; color: #667eea;">
+                            已选择 <span id="selected-count">0</span> 个卡片
+                        </span>
+                        <button class="btn btn-danger btn-small" onclick="batchDeleteCards()">
+                            🗑️ 批量删除
+                        </button>
+                        <button class="btn btn-primary btn-small" onclick="showBatchMoveDialog()">
+                            📦 批量移动
+                        </button>
+                        <button class="btn btn-secondary btn-small" onclick="clearSelection()">
+                            ✖️ 清除选择
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 友情链接 -->
+            <div class="tab-content" id="friends">
+                <div class="alert alert-info">
+                    💡 快速添加友情链接
+                </div>
+
+                <div class="add-section">
+                    <h3 style="margin-bottom: 15px;">➕ 添加友情链接</h3>
+                    <form class="add-form" onsubmit="quickAddFriend(event)">
+                        <div class="form-field">
+                            <label>网站名称 *</label>
+                            <input type="text" id="quickFriendTitle" placeholder="例如：示例网站" required>
+                        </div>
+                        <div class="form-field">
+                            <label>网站链接 *</label>
+                            <input type="url" id="quickFriendUrl" placeholder="https://example.com" required>
+                        </div>
+                        <div class="form-field" style="flex: 0 0 150px;">
+                            <label>Logo（可选）</label>
+                            <input type="text" id="quickFriendLogo" placeholder="留空使用首字母">
+                        </div>
+                        <button type="submit" class="btn btn-primary">添加链接</button>
+                    </form>
+                </div>
+
+                <div class="friend-list" id="friendsList"></div>
+            </div>
+
+            <!-- 导出数据 -->
+            <div class="tab-content" id="export">
+                <div class="alert alert-info">
+                    <strong>⚠️ 重要提示：如何让修改生效？</strong><br><br>
+                    当前编辑器中的所有修改仅保存在浏览器缓存中！<br><br>
+                    要让修改在导航网站上生效，必须：<br>
+                    1️⃣ 点击下方"导出 data.js"按钮下载文件<br>
+                    2️⃣ 
+将下载的文件替换到项目的 <code>js/data.js</code><br>
+                    3️⃣ 刷新导航网站（index.html）
+                </div>
+                <div class="export-section">
+                    <h3>📦 导出数据到 data.js</h3>
+                    <p style="margin: 15px 0; color: #666;">生成最新的配置文件并应用到导航网站</p>
+                    <div class="export-actions">
+                        <button class="btn btn-success" onclick="exportData()">💾 导出 data.js</button>
+                        <button class="btn btn-secondary" onclick="previewData()">👁️ 预览数据</button>
+                        <button class="btn btn-primary" onclick="copyData()">📋 复制代码</button>
+                    </div>
+                </div>
+                <div id="codePreview" style="display: none;">
+                    <h4 style="margin: 20px 0 10px;">代码预览：</h4>
+                    <div class="code-preview" id="previewContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/editor-new.js"></script>
+</body>
+</html>
