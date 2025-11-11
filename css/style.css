@@ -760,7 +760,38 @@ body {
 
 @media (max-width: 768px) {
   .home-container {
-    padding-top: 60px;
+    padding-top: 80px;
+  }
+  
+  .menu-bar-fixed {
+    top: 0.3rem;
+  }
+  
+  .menu-bar {
+    padding: 0.3rem;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .menu-bar button {
+    font-size: 12px;
+    padding: 0.35rem 0.7rem 0.35rem 0.6rem;
+    white-space: nowrap;
+  }
+  
+  .menu-bar button::after {
+    font-size: 8px;
+  }
+  
+  .submenu-section.show {
+    max-height: 150px;
+    padding: 0.5rem 0 0.3rem 0;
+  }
+  
+  .submenu-item {
+    font-size: 11px;
+    padding: 0.3rem 0.6rem;
   }
   
   .container {
@@ -782,17 +813,6 @@ body {
     font-size: 12px;
   }
   
-  .menu-bar button {
-    font-size: 14px;
-    padding: 0.4rem 0.8rem;
-  }
-  
-  .submenu-item {
-    font-size: 13px;
-    padding: 0.35rem 0.8rem;
-  }
-  
-  
   .footer-content {
     gap: 15px;
   }
@@ -809,6 +829,79 @@ body {
 }
 
 @media (max-width: 480px) {
+  .home-container {
+    padding-top: 100px;
+  }
+  
+  .menu-bar-fixed {
+    top: 0.2rem;
+  }
+  
+  .menu-bar {
+    padding: 0.25rem;
+    gap: 0.2rem;
+    max-width: 100%;
+  }
+  
+  .menu-bar button {
+    font-size: 11px;
+    padding: 0.3rem 0.5rem 0.3rem 0.45rem;
+    min-width: auto;
+  }
+  
+  .menu-bar button::after {
+    font-size: 7px;
+    margin-left: 2px;
+  }
+  
+  .search-section {
+    padding: 1.2rem 0 0.6rem 0;
+  }
+  
+  .search-engine-select {
+    gap: 3px;
+    padding-bottom: 0.25rem;
+  }
+  
+  .engine-btn {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+  
+  .search-container {
+    width: 96%;
+    padding: 0.2rem;
+  }
+  
+  .search-input {
+    font-size: 0.95rem;
+    padding: 0.1rem 0.4rem;
+  }
+  
+  .search-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .submenu-section.show {
+    max-height: 120px;
+    padding: 0.4rem 0 0.25rem 0;
+  }
+  
+  .submenu-scroll {
+    gap: 0.3rem;
+    padding: 0.2rem 0.3rem;
+  }
+  
+  .submenu-item {
+    font-size: 10px;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .divider {
+    margin: 0.4rem auto;
+  }
+  
   .container {
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
@@ -830,36 +923,6 @@ body {
     padding: 0 2px;
   }
   
-  .search-section {
-    padding: 1.5rem 0 0.8rem 0;
-  }
-  
-  .search-container {
-    width: 95%;
-  }
-  
-  .search-input {
-    font-size: 1rem;
-  }
-  
-  .submenu-section {
-    padding: 0.8rem 0 0.4rem 0;
-  }
-  
-  .submenu-item {
-    font-size: 12px;
-    padding: 0.3rem 0.7rem;
-  }
-  
-  .divider {
-    margin: 0.5rem auto;
-  }
-  
-  .menu-bar button {
-    font-size: 13px;
-    padding: 0.4rem 0.7rem;
-  }
-  
   .friend-link-card {
     padding: 10px 12px;
     gap: 10px;
@@ -879,9 +942,21 @@ body {
   }
   
   .modal-content {
-    width: 95%;
+    width: 96%;
     height: auto;
-    max-height: 85vh;
+    max-height: 80vh;
+  }
+  
+  .modal-header {
+    padding: 8px 16px;
+  }
+  
+  .modal-header h3 {
+    font-size: 18px;
+  }
+  
+  .modal-body {
+    padding: 16px;
   }
 }
 
